@@ -31,7 +31,7 @@ export function FinancialDashboard() {
     <div className="space-y-6">
       {/* Welcome Section */}
       <div className="space-y-2">
-        <h2 className="text-2xl font-bold text-balance">Welcome back, Sarah</h2>
+        <h2 className="text-2xl font-bold text-balance">Welcome back, Silvia</h2>
         <p className="text-muted-foreground text-pretty">Here's your financial overview for this month</p>
       </div>
 

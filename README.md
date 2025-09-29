@@ -147,6 +147,10 @@ This project demonstrates the integration of:
 
 **Team KaziSecure**
 
+**Team Lead**: Silvia Mutete  
+**Contact**: +254758079542  
+**Email**: support@kazisecure.co.ke
+
 Built for the Youth Empowerment and Digital Inclusion Hackathon
 
 ## Live Demo
