@@ -11,7 +11,7 @@ import { Smartphone, Send, RotateCcw } from "lucide-react"
 
 export function USSDSimulator() {
   const [sessionId] = useState(() => Math.random().toString(36).substr(2, 9))
-  const [phoneNumber] = useState("+254712345678")
+  const [phoneNumber] = useState("+254758079542") // Updated phone number to Silvia's number
   const [currentInput, setCurrentInput] = useState("")
   const [conversation, setConversation] = useState<
     Array<{ type: "sent" | "received"; message: string; timestamp: Date }>
