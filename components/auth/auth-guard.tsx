@@ -22,10 +22,11 @@ export function AuthGuard({ children, requireAuth = true }: AuthGuardProps) {
     const checkAuth = async () => {
       try {
         // In a real app, this would check JWT token, session, etc.
-        const token = localStorage.getItem("auth_token")
-        const isValid = token && token.length > 0
+  const token = localStorage.getItem("auth_token")
+  // normalize to boolean: true if token is a non-empty string, otherwise false
+  const isValid: boolean = !!(token && token.length > 0)
 
-        setIsAuthenticated(isValid)
+  setIsAuthenticated(isValid)
       } catch (error) {
         setIsAuthenticated(false)
       } finally {

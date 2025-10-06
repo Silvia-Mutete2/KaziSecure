@@ -41,7 +41,15 @@ export function LoginForm() {
   const handleBiometric = () => {
     setIsLoading(true)
     setTimeout(() => {
-      // Redirect to dashboard
+      // Simulate setting an auth token and user id, then redirect
+      const userId = `user_${Math.random().toString(36).slice(2, 9)}`
+      const token = `token-${userId}`
+      try {
+        localStorage.setItem('auth_token', token)
+        localStorage.setItem('user_id', userId)
+      } catch (e) {
+        // ignore
+      }
       window.location.href = "/"
     }, 1500)
   }
