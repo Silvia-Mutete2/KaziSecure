@@ -1,0 +1,113 @@
+name: Deploy to Vercel
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  vercel-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: |
+          if command -v pnpm >/dev/null 2>&1; then pnpm install; else npm install; fi
+
+      - name: Build
+        run: |
+          if command -v pnpm >/dev/null 2>&1; then pnpm build; else npm run build; fi
+
+      - name: Deploy to Vercel
+        id: vercel
+        uses: vercel/action@v2
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          # If this run is from the main branch, make a production deployment.
+          # For pull requests, the action creates a preview deployment by default.
+          prod-branch: main
+
+      - name: Comment deployment URL on PR
+        if: github.event_name == 'pull_request' && steps.vercel.outputs.preview-url
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const url = '${{ steps.vercel.outputs.preview-url }}' || '${{ steps.vercel.outputs.url }}'
+            const prNumber = context.payload.pull_request.number
+            const body = `✅ Vercel preview deployment available: ${url}`
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+              body,
+            })
+
+  update-badges:
+    needs: vercel-deploy
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - name: Replace badge placeholders in README
+        env:
+          VERCEL_ORG_SLUG: ${{ secrets.VERCEL_ORG_SLUG }}
+          VERCEL_PROJECT_SLUG: ${{ secrets.VERCEL_PROJECT_SLUG }}
+          VERCEL_STAGE_ORG_SLUG: ${{ secrets.VERCEL_STAGE_ORG_SLUG }}
+          VERCEL_STAGE_PROJECT_SLUG: ${{ secrets.VERCEL_STAGE_PROJECT_SLUG }}
+          GITHUB_ACTOR: ${{ github.actor }}
+        run: |
+          set -e
+          README=README.md
+          # Don't run if the repo is updated by the action itself
+          if [ "${GITHUB_ACTOR}" = "github-actions[bot]" ]; then
+            echo "Skipping badge update because actor is github-actions[bot]"
+            exit 0
+          fi
+
+          # Replace production badge
+          if [ -n "$VERCEL_ORG_SLUG" ] && [ -n "$VERCEL_PROJECT_SLUG" ]; then
+            PROD_BADGE="[![Vercel Production](https://vercel.com/${VERCEL_ORG_SLUG}/${VERCEL_PROJECT_SLUG}/badge)](https://vercel.com/${VERCEL_ORG_SLUG}/${VERCEL_PROJECT_SLUG})"
+            sed -i "1s|.*|${PROD_BADGE}|" $README
+          else
+            echo "VERCEL_ORG_SLUG or VERCEL_PROJECT_SLUG not set; skipping production badge replacement"
+          fi
+
+          # Replace staging badge (if provided)
+          if [ -n "$VERCEL_STAGE_ORG_SLUG" ] && [ -n "$VERCEL_STAGE_PROJECT_SLUG" ]; then
+            STAGE_BADGE="[![Vercel Staging](https://vercel.com/${VERCEL_STAGE_ORG_SLUG}/${VERCEL_STAGE_PROJECT_SLUG}/badge)](https://vercel.com/${VERCEL_STAGE_ORG_SLUG}/${VERCEL_STAGE_PROJECT_SLUG})"
+            # Insert staging badge after the first line if a placeholder exists; otherwise append
+            awk -v badge="$STAGE_BADGE" 'NR==1{print; print badge; next}1' $README > /tmp/README.md && mv /tmp/README.md $README || true
+          else
+            echo "No staging slugs provided; skipping staging badge replacement"
+          fi
+
+      - name: Commit and push README badge update
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -e
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git add README.md
+          git commit -m "chore: update Vercel badge URLs [skip ci]"
+          git push origin HEAD:main

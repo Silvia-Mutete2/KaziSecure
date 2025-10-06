@@ -1,9 +1,10 @@
 # KaziSecure
 
-**Empowering Kenya's Gig Economy Workers with AI-Powered Financial Management**
+[![Vercel Production](https://vercel.com/<YOUR_ORG>/<YOUR_PROJECT>/badge)](https://vercel.com/<YOUR_ORG>/<YOUR_PROJECT>)
 
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/silviamutete2s-projects/v0-youth-empowerment-pitch)
-[![Built with v0](https://img.shields.io/badge/Built%20with-v0.app-black?style=for-the-badge)](https://v0.app/chat/projects/dyp5SfypL1J)
+**Empowering Kenya's Gig Economy Workers with AI-Powered Financial Management**
+ 
+[![Vercel Staging](https://vercel.com/<YOUR_STAGE_ORG>/<YOUR_STAGE_PROJECT>/badge)](https://vercel.com/<YOUR_STAGE_ORG>/<YOUR_STAGE_PROJECT>)
 
 ## Overview
 
@@ -66,116 +67,183 @@ KaziSecure addresses these challenges through:
 ## Tech Stack
 
 - **Frontend**: Next.js 15, React, TypeScript
-- **Styling**: Tailwind CSS v4
-- **UI Components**: shadcn/ui, Recharts
-- **AI/ML**: Pattern recognition algorithms for income prediction
-- **Security**: Multi-factor authentication, encryption protocols
-- **Mobile**: USSD integration for feature phone access
-- **Deployment**: Vercel
+# KaziSecure
 
-## Getting Started
+Empowering Kenya's gig economy workers with AI-powered, secure financial management.
 
-### Prerequisites
 
-- Node.js 18+ installed
-- npm or yarn package manager
+## Overview
 
-### Installation
+KaziSecure is an AI-enabled, secure digital financial management platform built for gig economy workers in Kenya. It provides income forecasting, smart budgeting, security features, and accessibility via web and USSD for feature phones.
 
-1. Clone the repository:
-\`\`\`bash
-git clone https://github.com/Silvia-Mutete2/KaziSecure.git
-cd KaziSecure
-\`\`\`
+## Highlights
+- AI-driven income prediction and budgeting
+- USSD support for feature phones (no internet required)
+- Security-first design: fraud detection, encryption, and account protections
+- Responsive Next.js + React app with reusable components
 
-2. Install dependencies:
-\`\`\`bash
+## Tech stack
+- Frontend: Next.js 14 (app router), React, TypeScript
+- Styling: Tailwind CSS v4
+- Charts & visualizations: Recharts
+- State & forms: react-hook-form, zod
+- UI primitives: Radix + shadcn-style components
+- Tests: Vitest + Testing Library
+- Package manager: pnpm (pnpm-lock.yaml present), npm or yarn also supported
+
+The dependencies come from the project's `package.json` — run `pnpm install` (recommended) or `npm install` if you don't use pnpm.
+
+## Getting started (local development)
+
+Prerequisites:
+- Node.js 18+
+- pnpm (recommended) or npm
+
+Install dependencies:
+
+```bash
+# recommended (uses pnpm lockfile present in the repo)
+pnpm install
+
+# or, if you don't have pnpm
 npm install
-\`\`\`
+```
 
-3. Run the development server:
-\`\`\`bash
+Run the development server:
+
+```bash
+pnpm dev
+# or
 npm run dev
-\`\`\`
+```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser
+Open http://localhost:3000 in your browser.
 
-### USSD Testing
+Available scripts (from package.json):
+- dev: next dev
+- build: next build
+- start: next start
+- test: vitest
+- lint: next lint
 
-To test the USSD functionality:
-1. Navigate to `/ussd-demo` in the app
-2. Use the USSD simulator to test various commands
-3. Try the main menu: `*384*96#`
+Run tests:
 
-## Project Structure
+```bash
+pnpm test
+# or
+npm run test
+```
 
-\`\`\`
-kazisecure/
-├── app/                          # Next.js app directory
-│   ├── ai-insights/             # AI prediction pages
-│   ├── api/ussd/                # USSD API endpoints
-│   ├── auth/                    # Authentication pages
-│   ├── security/                # Security dashboard
-│   └── ussd-demo/               # USSD simulator
-├── components/                   # React components
-│   ├── auth/                    # Authentication components
-│   ├── security/                # Security features
-│   ├── ui/                      # UI components (shadcn)
-│   └── *.tsx                    # Core components
-└── lib/                         # Utility functions
-\`\`\`
+Run the linter:
 
-## How It Aligns with Youth Empowerment
+```bash
+pnpm lint
+# or
+npm run lint
+```
 
-KaziSecure directly addresses youth empowerment and digital inclusion by:
+## USSD & API
 
-1. **Economic Empowerment**: Helping young gig workers manage finances effectively and build savings
-2. **Digital Skills**: Introducing youth to AI and fintech tools that enhance financial literacy
-3. **Accessibility**: USSD support ensures even those without smartphones can participate
-4. **Security Education**: Teaching users about cybersecurity and protecting their financial data
-5. **Financial Independence**: Enabling better financial planning leads to economic stability
+- The USSD endpoints live under `app/api/ussd` (see `app/api/ussd/route.ts`).
+- There's a USSD simulator at the route `/ussd-demo` for manual testing of flows and menu interactions.
 
-## Hackathon Integration
+Try the USSD demo page in the running app to simulate common USSD commands.
 
-This project demonstrates the integration of:
+## Project structure (partial)
 
-- **AI**: Machine learning for income prediction, pattern recognition, and personalized recommendations
-- **Cybersecurity**: Multi-factor authentication, fraud detection, encryption, and threat monitoring
-- **FinTech**: Digital financial management, mobile payments (M-Pesa), budgeting tools, and credit access preparation
+```
+KaziSecure/
+├─ app/                    # Next.js app (app router)
+│  ├─ api/                 # API routes (includes ussd, budgets, etc.)
+│  ├─ ai-insights/         # AI prediction pages
+│  ├─ auth/                # auth pages (login, register)
+│  └─ ussd-demo/           # USSD simulator UI
+├─ components/             # React components (ui, auth, security, etc.)
+├─ lib/                    # helper libs (budgeting, utils)
+├─ public/                 # static assets
+├─ styles/                 # global styles
+├─ tests/                  # unit / integration tests
+├─ package.json
+└─ pnpm-lock.yaml
+```
 
-## Team
+## Key features
 
-**Team KaziSecure**
+- Financial dashboard: income/expense tracking and charts
+- AI income predictions and planning suggestions
+- Smart budgeting and goal tracking
+- USSD access for feature phones
+- Security features: fraud detection, encryption, security score
 
-**Team Lead**: Silvia Mutete  
-**Contact**: +254758079542  
-**Email**: support@kazisecure.co.ke
+## How this repo maps to the project
 
-Built for the Youth Empowerment and Digital Inclusion Hackathon
+- `components/` contains UI building blocks used across pages.
+- `app/` is the Next.js app router where the pages and API routes live.
+- `lib/budget.ts` and `lib/utils.ts` contain core budgeting logic and helpers used by the UI and tests.
 
-## Live Demo
+## Tests
 
-**Production**: [https://vercel.com/silviamutete2s-projects/v0-youth-empowerment-pitch](https://vercel.com/silviamutete2s-projects/v0-youth-empowerment-pitch)
+Run the test suite with `pnpm test` (uses Vitest). See `tests/` for example unit tests.
 
-**Development**: Continue building on [v0.app](https://v0.app/chat/projects/dyp5SfypL1J)
+## Deployment
 
-## Future Enhancements
+This project is ready for deployment to platforms that support Next.js (for example, Vercel). You can deploy via the Vercel web UI, the Vercel CLI, or using the included GitHub Actions workflow.
 
-- Integration with real banking APIs
-- Machine learning model training on actual user data
-- SMS notifications for important financial events
-- Community features for peer-to-peer financial advice
-- Microfinance and credit scoring integration
-- Multi-language support (English, Swahili, Sheng)
+Deployment options
+
+1) Vercel web UI (recommended for quick start)
+	- Go to https://vercel.com and sign in
+	- Import the GitHub repository and select the `main` branch
+	- Vercel auto-detects Next.js — use the defaults (Build Command: `pnpm build` or `npm run build`, Install Command: `pnpm install`)
+
+2) Vercel CLI
+	- Install Vercel: `pnpm add -g vercel` (or `npm i -g vercel`)
+	- Run `vercel` in the project root and follow prompts
+
+3) GitHub Actions (CI) — automatic deploy on push to `main`
+	- A GitHub Actions workflow is included at `.github/workflows/deploy-to-vercel.yml`.
+	- Add the following repository secrets in GitHub: `VERCEL_TOKEN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID`.
+	  - `VERCEL_TOKEN`: a personal token created in your Vercel account (Settings → Tokens).
+	  - `VERCEL_ORG_ID` and `VERCEL_PROJECT_ID`: available in the Vercel project settings or from the Vercel API.
+	- Push to `main` and the workflow will build and trigger a deployment.
+
+Notes
+- The repo contains `vercel.json` and a `.vercelignore` to help control the deployment configuration and which files are uploaded.
+- If you use pnpm, GitHub Actions and Vercel should use `pnpm install`/`pnpm build`. If you prefer npm, change those commands in the Vercel project settings or the workflow.
+
+Add a production badge
+
+1. After you import the repository into Vercel and create a project, Vercel provides a badge URL in the format:
+
+	`https://vercel.com/<YOUR_ORG>/<YOUR_PROJECT>/badge`
+
+2. Replace `<YOUR_ORG>` and `<YOUR_PROJECT>` in the badge link at the top of this README with your actual values so the badge points to the real project and shows the latest production deployment status.
+
+Staging / preview badge
+
+If you maintain a separate staging project in Vercel you can add a staging badge using the same pattern. Replace `<YOUR_STAGE_ORG>` and `<YOUR_STAGE_PROJECT>` with the staging project slugs.
 
 ## Contributing
 
-This project is part of a hackathon submission. For questions or collaboration opportunities, please reach out to the team.
+Small contributions, bug reports, and improvements are welcome. If you'd like to contribute:
+
+1. Fork the repository
+2. Create a feature branch
+3. Add tests for new behavior
+4. Open a pull request describing the change
+
+## Contact
+
+Team Lead: Silvia Mutete
+
+Contact: +254758079542
+
+Email: silviamutetekisoi@gmail.com
 
 ## License
 
-MIT License - See LICENSE file for details
+MIT — see the `LICENSE` file if present.
 
 ---
 
-**KaziSecure** - Securing the financial future of Kenya's gig economy workers, one transaction at a time.
+KaziSecure — securing the financial future of Kenya's gig economy workers, one transaction at a time.
