@@ -64,23 +64,6 @@ KaziSecure addresses these challenges through:
 - Security score tracking
 - Compliance with data protection standards
 
-## Tech Stack
-
-- **Frontend**: Next.js 15, React, TypeScript
-# KaziSecure
-
-Empowering Kenya's gig economy workers with AI-powered, secure financial management.
-
-
-## Overview
-
-KaziSecure is an AI-enabled, secure digital financial management platform built for gig economy workers in Kenya. It provides income forecasting, smart budgeting, security features, and accessibility via web and USSD for feature phones.
-
-## Highlights
-- AI-driven income prediction and budgeting
-- USSD support for feature phones (no internet required)
-- Security-first design: fraud detection, encryption, and account protections
-- Responsive Next.js + React app with reusable components
 
 ## Tech stack
 - Frontend: Next.js 14 (app router), React, TypeScript
